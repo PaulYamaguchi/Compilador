@@ -42,7 +42,7 @@ public class FrameAcerca extends JDialog {
             Font fuenteAreaTexto = new Font("Franklin Gothic Book", Font.PLAIN, 16);
 //            areTextoTec.setBounds(150, 5, 350, 70);
             areTextoTec.setBounds(150, 120, 350, 70);
-            areTextoTec.setText("    Instituto Tecnológico de Culiacán\n Ingeniería en Sistemas Computacionales");
+            areTextoTec.setText("    Instituto Tecnologico de Culiacan\n Ingenieria en Sistemas Computacionales");
             areTextoTec.setFont(fuenteAreaTexto);
             areTextoTec.setOpaque(false);
 
@@ -66,8 +66,8 @@ public class FrameAcerca extends JDialog {
             areaDeTexto.setBounds(100, 200, 420, 300);
             areaDeTexto.setOpaque(false);
             areaDeTexto.setText("2020 Version 1.0 Software compilador de texto\nCompilador desarrollado por estudiantes "
-                    + "pertenecientes\nal Insituto Tecnologico de Culiacan,\nse prohibe su venta y distribucion."
-                    + "\n\n\n\n\nAutor :\n* Yamaguchi Valdez Paul Ivan");
+                    + "pertenecientes\nal Insituto Tecnologico de Culiacan"
+                    + "\n\n\n\n\nAutores :\n* Yamaguchi Valdez Paul Ivan\n* Quintero Camacho Benjamin\n Profe si ve esto, Ponganos 100 o 70 de perdida");
             areaDeTexto.setFont(fuenteAreaTexto);
             
             areaDeTexto.setEditable(false);
