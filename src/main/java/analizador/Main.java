@@ -82,7 +82,7 @@ public class Main extends JFrame implements ActionListener {
 		add(btnVerTabla);
 		add(btnCerrar);
 		setVisible(true);
-	}
+	}	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
