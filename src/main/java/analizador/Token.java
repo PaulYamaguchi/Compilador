@@ -1,4 +1,5 @@
-package main.java.analizador;
+package CompiladorMain;
+
 public class Token {
 	
 	private String token;

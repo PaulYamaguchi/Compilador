@@ -1,4 +1,4 @@
-package main.java.analizador;
+package CompiladorMain;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -70,19 +70,19 @@ public class Analiza
 			tipo =50;
 		}
 		if(token.matches("^[0-9][0-9][0-9]+?$")) {//error en numeros
-			resultado.add("Error L�xico, se esperaba una longitud de 2 d�gitos en el n�mero \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
+			resultado.add("Error Lexico, se esperaba una longitud de 2 digitos en el numero \"" + token +"\" en la linea "+renglon+", No. de token "+columna+" ");
 			tokenRC.add(new Token(token, renglon, columna, tipo));
 			bandera = false;
 			return;
 		}
 	
 		if(tipo==-1) {
-			Pattern pat = Pattern.compile("^[a-z]+[0-9]+$");
+			Pattern pat = Pattern.compile("^[a-zA-Z]+[0-9]*+$");
 			Matcher mat = pat.matcher(token);
 			if(mat.find())
 				tipo =52;
 			else {
-				resultado.add("Error L�xico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un n�mero al final");
+				resultado.add("Error Lexico en la linea \""+renglon+"\" No. de token \""+columna+"\" nombre del token \""+token+"\", algunos signos no se admiten, los identificadores deben llevar al menos un numero al final");
 				tokenRC.add(new Token(token, renglon, columna, tipo));
 				bandera = false;
 				return;
@@ -90,7 +90,6 @@ public class Analiza
 		}
 		tokenRC.add(new Token(token, renglon, columna, tipo));
 
-//		System.out.println(cont++ + " " +token);
 	}
 	public String espacios(String linea){
 		for (String cadena : Arrays.asList("(", ")", "{", "}", "=", ";", "*", "-", "+", "<", "/", ">", "!"))

@@ -1,4 +1,5 @@
-package main.java.analizador;
+package CompiladorMain;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -17,10 +18,13 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -28,7 +32,10 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 public class Main extends JFrame implements ActionListener {
 
 	public static JTextArea area, consola;
-	private JButton btnCompilar, btnAbrir, btnCerrar;
+	private JButton btnCompilar,btnVerTabla, btnAbrir, btnCerrar;
+	private ArrayList<ValoresTabla> tablaSimbolos;
+	
+	private boolean semanticStatus;
 	
 	public Main() {
 		hazInterfaz();
@@ -43,39 +50,37 @@ public class Main extends JFrame implements ActionListener {
 	private void hazInterfaz() {
 		setLayout(null);
 		setUndecorated(true);
-		setSize(500, 700);
+		setSize(900, 700);
 		setLocationRelativeTo(null);
-		setShape(new RoundRectangle2D.Double(0, 0, 500, 700, 20, 20));
-
-		PanelGradiente panel = new PanelGradiente(	);
-		panel.setBounds(0,0,500,700);
 		
 		area = new JTextArea();
 		consola = new JTextArea();
 		consola.setEnabled(false);
 		consola.setDisabledTextColor(Color.BLACK);
 		btnCompilar= new JButton("Compilar");
-		btnCompilar.setBounds(88, 5, 150, 40);
+		btnCompilar.setBounds(730, 125, 150, 40);
 		btnCompilar.addActionListener(this);
+		btnVerTabla = new JButton("Tabla de simbolos");
+		btnVerTabla.setBounds(730, 200, 150, 40);	
+		btnVerTabla.addActionListener(this);
 		btnAbrir= new JButton("Abrir archivo");
-		btnAbrir.setBounds(263, 5, 150, 40);
+		btnAbrir.setBounds(730, 275, 150, 40);
 		btnAbrir.addActionListener(this);
-		btnCerrar= new JButton("X");
-		btnCerrar.setBounds(440,5, 40,40);
-		btnCerrar.setBackground(Color.decode("#65417A"));
+		btnCerrar= new JButton("Cerrar");
+		btnCerrar.setBounds(780,5, 100,40);
 		btnCerrar.addActionListener(this);
 		
 		JScrollPane scrollPaneArea = new JScrollPane(area);
-		scrollPaneArea.setBounds(30, 50, 440, 300);
+		scrollPaneArea.setBounds(30, 50, 700, 300);
 		JScrollPane scrollPaneConsola = new JScrollPane(consola);
-		scrollPaneConsola.setBounds(30, 350, 440, 330);
+		scrollPaneConsola.setBounds(30, 350, 700, 330);
 		
 		add(scrollPaneArea);
 		add(scrollPaneConsola);
 		add(btnAbrir);
 		add(btnCompilar);
+		add(btnVerTabla);
 		add(btnCerrar);
-		add(panel);
 		setVisible(true);
 	}
 	
@@ -89,6 +94,22 @@ public class Main extends JFrame implements ActionListener {
 		if(e.getSource() == btnCompilar) {
 			generarArchivo();
 			compilar();
+			return;
+		}
+		
+		if(e.getSource() == btnVerTabla) {
+			if(this.consola.getText().trim().length() == 0) {
+				JOptionPane.showMessageDialog(this, "No se ha realizado la compilacion");
+				return;
+			}
+			if(!this.semanticStatus) {
+				JOptionPane.showMessageDialog(this, "La tabla de simbolos no puede verse ya que la compilacion fue erronea");
+				return;
+			}
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista(this.tablaSimbolos);
+			viewTabla.setSize(700, 460); 
+			viewTabla.setLocationRelativeTo(null);
+			viewTabla.setVisible(true);
 			return;
 		}
 		
@@ -127,7 +148,7 @@ public class Main extends JFrame implements ActionListener {
 	
 	private void compilar() {		
 		if(area.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, "Primero escribe c�digo...");
+			JOptionPane.showMessageDialog(this, "Primero escribe codigo...");
 			area.requestFocus();
 			return;
 		}
@@ -135,6 +156,7 @@ public class Main extends JFrame implements ActionListener {
 		Analiza analizador = new Analiza("codigo.txt");
 		ArrayList<String> a1 = analizador.resultado;
 		ArrayList<Token> tk = analizador.tokenRC;
+		Tabla t;
 		Sintactico s;
 
 		consola.setText("");
@@ -143,23 +165,11 @@ public class Main extends JFrame implements ActionListener {
 			consola.append(a1.get(i)+ "\n");
 		}
 
-		if (a1.get(0).equals("No hay errores lexicos")) {
 			s = new Sintactico(analizador.tokenRC);
-		}
-	}
-	
-
-	class PanelGradiente extends JPanel {
-		private static final long serialVersionUID = 1L;
-		
-		@Override
-		public void paint(Graphics g) {
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setPaint(new GradientPaint(0, 0, Color.decode("#5A415B"), 500, 50, Color.decode("#65417A")));
-			g2.fillRect(0, 0, getWidth(), 50);
-			g2.setPaint(new GradientPaint(0, 0, Color.decode("#78415B"), 500, 700, Color.decode("#75417A")));
-			g2.fillRect(0, 50, getWidth(), 670);
-		}
+			t = new Tabla(analizador.tokenRC);
+			
+			tablaSimbolos = t.getValoresTabla();
+			consola.append("\n");
 	}
 
 }
