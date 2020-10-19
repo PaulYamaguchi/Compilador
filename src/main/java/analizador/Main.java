@@ -1,4 +1,4 @@
-package CompiladorMain;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -169,7 +169,15 @@ public class Main extends JFrame implements ActionListener {
 			t = new Tabla(analizador.tokenRC);
 			
 			tablaSimbolos = t.getValoresTabla();
+			Semantico semantic = new Semantico(tablaSimbolos,area.getText());
+			ArrayList<String> semanticErrors = semantic.checkSemantic();
+			this.semanticStatus = semantic.status;
 			consola.append("\n");
+			for (int i = 0; i < semanticErrors.size(); i++) {
+				consola.append(semanticErrors.get(i)+ "\n");
+			}
+		
+
 	}
 
 }

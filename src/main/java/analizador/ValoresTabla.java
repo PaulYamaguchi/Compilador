@@ -1,4 +1,4 @@
-package CompiladorMain;
+
 public class ValoresTabla {
 public String rango, tipo, nombre, valor, renglon;
 	

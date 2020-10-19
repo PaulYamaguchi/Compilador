@@ -1,4 +1,3 @@
-package CompiladorMain;
 
 public class Token {
 	

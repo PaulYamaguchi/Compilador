@@ -1,4 +1,3 @@
-package CompiladorMain;
 
 import java.util.ArrayList;
 
