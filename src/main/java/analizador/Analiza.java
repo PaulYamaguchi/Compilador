@@ -1,4 +1,4 @@
-
+package Compilador1;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -17,6 +17,9 @@ public class Analiza
 		analizaCodigo(ruta);
 		if(bandera) /*{*/
 			resultado.add("No hay errores lexicos"); 
+		//prueba
+		resultado.add(" ");
+			resultado.add("No hay errores sintácticos");
 	}
 	public void analizaCodigo(String ruta)
 	{	

@@ -1,3 +1,4 @@
+package Compilador1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,6 +29,8 @@ import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+
 
 public class Main extends JFrame implements ActionListener {
 
@@ -106,7 +109,7 @@ public class Main extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "La tabla de simbolos no puede verse ya que la compilacion fue erronea");
 				return;
 			}
-			TablaSimbolosVista viewTabla = new TablaSimbolosVista(this.tablaSimbolos);
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista((ArrayList<Presentacion>)(ArrayList<?>)this.tablaSimbolos,1);
 			viewTabla.setSize(700, 460); 
 			viewTabla.setLocationRelativeTo(null);
 			viewTabla.setVisible(true);
@@ -171,12 +174,17 @@ public class Main extends JFrame implements ActionListener {
 			tablaSimbolos = t.getValoresTabla();
 			Semantico semantic = new Semantico(tablaSimbolos,area.getText());
 			ArrayList<String> semanticErrors = semantic.checkSemantic();
-			this.semanticStatus = semantic.status;
 			consola.append("\n");
 			for (int i = 0; i < semanticErrors.size(); i++) {
 				consola.append(semanticErrors.get(i)+ "\n");
 			}
 		
+			CodigoIntermedio codigoI = new CodigoIntermedio(this.area.getText().trim(),tablaSimbolos);
+			ArrayList<Cuadruplo> cuadruplos = codigoI.getCuadruplos();
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista((ArrayList<Presentacion>)(ArrayList<?>)cuadruplos,2);
+			viewTabla.setSize(700, 460); 
+			viewTabla.setLocationRelativeTo(null);
+			viewTabla.setVisible(true);
 
 	}
 

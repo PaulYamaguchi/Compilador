@@ -1,3 +1,4 @@
+package Compilador1;
 
 import java.util.ArrayList;
 
@@ -230,7 +231,7 @@ public class Sintactico<T> {
 	}
 
 	public void error(int type) {
-		String tipo = ValoresInversos(type);
+		/*String tipo = ValoresInversos(type);
 		if (type == 0)
 			tipo = "\nError sintactico, se esperaba una expresion *class* al comienzo";
 		else if (type == 1)
@@ -249,13 +250,13 @@ public class Sintactico<T> {
 			tipo = "\nError sintactico en token ** " + tok + " ** se esperaba un token ** "
 					+ tipo + " **";
 
-		Main.consola.append(tipo);
+		Main.consola.append(tipo);*/
 	}
 
 	public void error() {
-		Main.consola.append("Error en la sintaxis, con el siguiente token ** " + tok + " ** en linea ** "
+		/*Main.consola.append("Error en la sintaxis, con el siguiente token ** " + tok + " ** en linea ** "
 				+ tokenRC.get(contando).getRenglon() + " **, No. de token ** " + tokenRC.get(contando).getColumna()
-				+ " **");
+				+ " **");*/
 	}
 
 	public boolean LogicSimbols() {
@@ -279,22 +280,7 @@ public class Sintactico<T> {
 
 	public String ValoresInversos(int type) {
 		String devuelve,
-				cadenas[] = { "class", "public", "private", "while", "int", "boolean", "{", "}", "=", ";", "<", ">", // 12...
-																														// Aunque
-																														// no
-																														// se
-																														// usa
-																														// como
-																														// tal
-																														// el
-																														// "!"
-																														// solo,
-																														// sirve
-																														// para
-																														// que
-																														// no
-																														// lance
-																														// error
+				cadenas[] = { "class", "public", "private", "while", "int", "boolean", "{", "}", "=", ";", "<", ">", 
 						"==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if" };
 		if (type == 50)
 			return devuelve = "numerico";

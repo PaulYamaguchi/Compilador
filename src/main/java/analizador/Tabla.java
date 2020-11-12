@@ -1,3 +1,4 @@
+package Compilador1;
 
 import java.util.ArrayList;
 
@@ -62,8 +63,8 @@ public class Tabla {
 			}
 
 		}
-		// Aquï¿½ a las variables declaradas se les asignan lo valores correspondientes al
-		// cï¿½digo en el .txt
+		// Aquí a las variables declaradas se les asignan lo valores correspondientes al
+		// código en el .txt
 		for (int i = 0; i < tokenRC.size(); i++) {
 
 			for (int j = 0; j < valoresTab.size(); j++) {
